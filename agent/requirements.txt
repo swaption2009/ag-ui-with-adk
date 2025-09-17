@@ -4,4 +4,4 @@ python-dotenv
 pydantic
 google-adk
 google-genai
--e /Users/mk/Developer/work/ag-ui/typescript-sdk/integrations/adk-middleware
+ag-ui-adk

@@ -8,7 +8,7 @@ import json
 from enum import Enum
 from typing import Dict, List, Any, Optional
 from fastapi import FastAPI
-from adk_middleware import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
 
 # ADK imports
 from google.adk.agents import LlmAgent
@@ -149,7 +149,7 @@ def simple_after_model_modifier(
 
 proverbs_agent = LlmAgent(
         name="ProverbsAgent",
-        model="gemini-2.5-pro",
+        model="gemini-2.5-flash",
         instruction=f"""
         When a user asks you to do anything regarding proverbs, you MUST use the set_proverbs tool.
 
