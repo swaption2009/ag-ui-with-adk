@@ -32,35 +32,29 @@ class ProverbsState(BaseModel):
         default_factory=list,
         description='The list of already written proverbs',
     )
-    changes: Optional[str] = Field(
-        None,
-        description="A description of the changes made to the list of proverbs"
-    )
+
 
 def set_proverbs(
   tool_context: ToolContext,
   new_proverbs: list[str]
 ) -> Dict[str, str]:
-    f"""
+    """
     Set the list of provers using the provided new list.
 
     Args:
         "new_proverbs": {
-            "type" : "array",
+            "type": "array",
             "items": {"type": "string"},
             "description": "The new list of proverbs to maintain",
-        },
-        "changes": {
-            "type": "string",
-            "description": "**OPTIONAL** - A brief description of what changes were made to the list compared to the previous version. Example: 'Removed the proverb you asked me to remove', 'Added 3 new proverbs', 'Changed the proverb from saying old man to old person'."
         }
 
     Returns:
         Dict indicating success status and message
     """
     try:
-        proverbs = {proverbs: new_proverbs}
-        tool_context.state["proverbs"] = proverbs
+        # Put this into a state object just to confirm the shape
+        new_state = { "proverbs": new_proverbs}
+        tool_context.state["proverbs"] = new_state["proverbs"]
         return {"status": "success", "message": "Proverbs updated successfully"}
 
     except Exception as e:
@@ -163,11 +157,8 @@ proverbs_agent = LlmAgent(
         1. Always use the set_proverbs tool for any proverbs-related requests
         2. Always pass the COMPLETE LIST of proverbs to the set_proverbs tool. If the list had 5 proverbs and you removed one, you must pass the complete list of 4 remaining proverbs.
         3. You can use existing proverbs if one is relevant to the user's request, but you can also create new proverbs as required.
-        3. When modifying an existing proverb, include the changes parameter to describe what was modified
-        4. Be creative and helpful in generating complete, practical recipes
-        5. After using the tool, provide a brief summary of what you create, removed, or changed
-        6. If the user asks you for the weather, use the get_weather tool
-        7.
+        4. Be creative and helpful in generating complete, practical proverbs
+        5. After using the tool, provide a brief summary of what you create, removed, or changed        7.
 
         Examples of when to use the set_proverbs tool:
         - "Add a proverb about soap" → Use tool with an array containing the existing list of proverbs with the new proverb about soap at the end.
@@ -210,6 +201,12 @@ add_adk_fastapi_endpoint(app, adk_proverbs_agent, path="/")
 if __name__ == "__main__":
     import os
     import uvicorn
+
+    if not os.getenv("GOOGLE_API_KEY"):
+        print("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
+        print("   Set it with: export GOOGLE_API_KEY='your-key-here'")
+        print("   Get a key from: https://makersuite.google.com/app/apikey")
+        print()
 
     port = int(os.getenv("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
