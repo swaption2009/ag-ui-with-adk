@@ -55,7 +55,7 @@ bun run install:agent
 > ```
 
 
-3. Set up your OpenAI API key:
+3. Set up your Google API key:
 ```bash
 export GOOGLE_API_KEY="your-google-api-key-here"
 ```
