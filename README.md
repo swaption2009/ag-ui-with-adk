@@ -5,7 +5,7 @@ This is a starter template for building AI agents using Google's [ADK](https://g
 ## Prerequisites
 
 - Node.js 18+
-- Python 3.8+
+- Python 3.12+
 - Google Makersuite API Key (for the ADK agent) (see https://makersuite.google.com/app/apikey)
 - Any of the following package managers:
   - pnpm (recommended)
