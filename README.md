@@ -1,6 +1,14 @@
 # CopilotKit <> ADK Starter
 
-This is a starter template for building AI agents using Google's [ADK](https://google.github.io/adk-docs/) and [CopilotKit](https://copilotkit.ai). It provides a modern Next.js application with an integrated investment analyst agent that can research stocks, analyze market data, and provide investment insights.
+This is a starter template for building AI agents using Google's [ADK](https://google.github.io/adk-docs/) and [CopilotKit](https://copilotkit.ai). It provides a modern Next.js application with an integrated AI agent that can:
+
+- 🔍 **Understand web page content** - Read and analyze DOM elements, text, and structure
+- 🎮 **Manipulate the DOM** - Click buttons, fill forms, modify styles, and control page elements
+- 🤖 **Natural language interaction** - Communicate with users through conversational AI
+- 🔄 **Maintain state** - Keep track of data across conversations
+- 📊 **Execute complex workflows** - Perform multi-step tasks automatically
+
+**New to this repo?** Start with the [Documentation Index](./DOCUMENTATION_INDEX.md) to find the right guide for you, or jump straight to the [Complete Tutorial](./TUTORIAL.md) to learn how to build agents that can understand and control web pages!
 
 ## Prerequisites
 
@@ -97,9 +105,20 @@ The main UI component is in `src/app/page.tsx`. You can:
 
 ## 📚 Documentation
 
+### 🗂️ [Documentation Index](./DOCUMENTATION_INDEX.md)
+**Start here!** Complete guide to all available documentation with recommended learning paths.
+
+### 📖 Tutorials & Guides
+- **[Complete Tutorial](./TUTORIAL.md)** - Comprehensive step-by-step guide to DOM understanding & manipulation with ADK agents
+- **[Quick Reference](./QUICK_REFERENCE.md)** - Quick lookup guide for common patterns and code snippets
+- **[Architecture Guide](./ARCHITECTURE.md)** - Detailed explanation of system architecture and data flow
+- **[Practical Examples](./EXAMPLES.md)** - Ready-to-use code examples for common scenarios
+
+### 🔗 External Documentation
 - [ADK Documentation](https://google.github.io/adk-docs/) - Learn more about the ADK and its features
 - [CopilotKit Documentation](https://docs.copilotkit.ai) - Explore CopilotKit's capabilities
 - [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API
+- [AG-UI Protocol](https://developers.googleblog.com/en/delight-users-by-combining-adk-agents-with-fancy-frontends-using-ag-ui/) - Understanding the agent-UI communication protocol
 
 
 ## Contributing
