@@ -33,45 +33,45 @@ By the end of this tutorial, you'll be able to build AI agents that can interact
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     USER INTERACTION                         │
-│              "Click the submit button"                       │
+│                     USER INTERACTION                        │
+│              "Click the submit button"                      │
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  FRONTEND (React/Next.js)                    │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  CopilotSidebar - User Interface                     │  │
-│  │  useCopilotAction - DOM Manipulation Handlers        │  │
-│  │  useCoAgent - Shared State Management                │  │
-│  │  useCopilotReadable - Screen Context Provider        │  │
-│  └──────────────────────────────────────────────────────┘  │
+│                  FRONTEND (React/Next.js)                   │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  CopilotSidebar - User Interface                     │   │
+│  │  useCopilotAction - DOM Manipulation Handlers        │   │
+│  │  useCoAgent - Shared State Management                │   │
+│  │  useCopilotReadable - Screen Context Provider        │   │
+│  └──────────────────────────────────────────────────────┘   │
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              API GATEWAY (Next.js API Route)                 │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  CopilotRuntime - Message Routing                    │  │
-│  │  HttpAgent - Backend Communication                   │  │
-│  └──────────────────────────────────────────────────────┘  │
+│              API GATEWAY (Next.js API Route)                │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  CopilotRuntime - Message Routing                    │   │
+│  │  HttpAgent - Backend Communication                   │   │
+│  └──────────────────────────────────────────────────────┘   │
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              BACKEND (Python/FastAPI + ADK)                  │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  ADKAgent Wrapper - CopilotKit Integration           │  │
-│  │  LlmAgent - Core Agent Logic                         │  │
-│  │  Tools - Custom Functions (set_proverbs, etc)        │  │
-│  │  Callbacks - State & Prompt Management               │  │
-│  └──────────────────────────────────────────────────────┘  │
+│              BACKEND (Python/FastAPI + ADK)                 │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  ADKAgent Wrapper - CopilotKit Integration           │   │
+│  │  LlmAgent - Core Agent Logic                         │   │
+│  │  Tools - Custom Functions (set_proverbs, etc)        │   │
+│  │  Callbacks - State & Prompt Management               │   │
+│  └──────────────────────────────────────────────────────┘   │
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   GOOGLE GEMINI 2.5 FLASH                    │
-│              (Natural Language Understanding)                │
+│                   GOOGLE GEMINI 2.5 FLASH                   │
+│              (Natural Language Understanding)               │
 └─────────────────────────────────────────────────────────────┘
 ```
 

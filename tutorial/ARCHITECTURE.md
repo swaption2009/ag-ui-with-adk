@@ -10,107 +10,107 @@ This document explains the architecture of the ADK + CopilotKit integration and 
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                           USER                                   │
-│              Types: "Click the submit button"                    │
+│                           USER                                  │
+│              Types: "Click the submit button"                   │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    FRONTEND LAYER                                │
-│                  (React/Next.js - Port 3000)                     │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  CopilotSidebar                                          │   │
-│  │  - Chat interface                                        │   │
-│  │  - Message display                                       │   │
-│  │  - User input                                            │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  React Hooks                                             │   │
-│  │  - useCopilotAction: DOM manipulation handlers          │   │
-│  │  - useCoAgent: Shared state management                  │   │
-│  │  - useCopilotReadable: Screen context provider          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  CopilotKit Provider                                     │   │
-│  │  - Wraps entire app                                      │   │
-│  │  - Manages WebSocket/HTTP communication                 │   │
-│  │  - Routes to API endpoint                                │   │
-│  └─────────────────────────────────────────────────────────┘   │
+│                    FRONTEND LAYER                               │
+│                  (React/Next.js - Port 3000)                    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  CopilotSidebar                                         │    │
+│  │  - Chat interface                                       │    │
+│  │  - Message display                                      │    │
+│  │  - User input                                           │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  React Hooks                                            │    │
+│  │  - useCopilotAction: DOM manipulation handlers          │    │
+│  │  - useCoAgent: Shared state management                  │    │
+│  │  - useCopilotReadable: Screen context provider          │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  CopilotKit Provider                                    │    │
+│  │  - Wraps entire app                                     │    │
+│  │  - Manages WebSocket/HTTP communication                 │    │
+│  │  - Routes to API endpoint                               │    │
+│  └─────────────────────────────────────────────────────────┘    │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    API GATEWAY LAYER                             │
+│                    API GATEWAY LAYER                            │
 │              (Next.js API Route - /api/copilotkit)              │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  CopilotRuntime                                          │   │
-│  │  - Message routing                                       │   │
-│  │  - Session management                                    │   │
-│  │  - Protocol translation                                  │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  HttpAgent                                               │   │
-│  │  - HTTP client to backend                                │   │
-│  │  - Request/response handling                             │   │
-│  │  - Error handling                                        │   │
-│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  CopilotRuntime                                         │    │
+│  │  - Message routing                                      │    │
+│  │  - Session management                                   │    │
+│  │  - Protocol translation                                 │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  HttpAgent                                              │    │
+│  │  - HTTP client to backend                               │    │
+│  │  - Request/response handling                            │    │
+│  │  - Error handling                                       │    │
+│  └─────────────────────────────────────────────────────────┘    │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                     BACKEND LAYER                                │
-│                (Python/FastAPI - Port 8000)                      │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  FastAPI Application                                     │   │
-│  │  - HTTP server                                           │   │
-│  │  - Endpoint: POST /                                      │   │
-│  │  - CORS handling                                         │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  ADKAgent Wrapper                                        │   │
-│  │  - CopilotKit integration                                │   │
-│  │  - Session management                                    │   │
-│  │  - State persistence                                     │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  LlmAgent (Google ADK)                                   │   │
-│  │  - Agent logic                                           │   │
-│  │  - Tool management                                       │   │
-│  │  - Callback handling                                     │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Custom Tools                                            │   │
-│  │  - set_proverbs()                                        │   │
-│  │  - get_weather()                                         │   │
-│  │  - Your custom tools...                                  │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Callbacks                                               │   │
-│  │  - before_agent: Initialize state                        │   │
-│  │  - before_model: Inject context                          │   │
-│  │  - after_model: Process response                         │   │
-│  └─────────────────────────────────────────────────────────┘   │
+│                     BACKEND LAYER                               │
+│                (Python/FastAPI - Port 8000)                     │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  FastAPI Application                                    │    │
+│  │  - HTTP server                                          │    │
+│  │  - Endpoint: POST /                                     │    │
+│  │  - CORS handling                                        │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  ADKAgent Wrapper                                       │    │
+│  │  - CopilotKit integration                               │    │
+│  │  - Session management                                   │    │
+│  │  - State persistence                                    │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  LlmAgent (Google ADK)                                  │    │
+│  │  - Agent logic                                          │    │
+│  │  - Tool management                                      │    │
+│  │  - Callback handling                                    │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  Custom Tools                                           │    │
+│  │  - set_proverbs()                                       │    │
+│  │  - get_weather()                                        │    │
+│  │  - Your custom tools...                                 │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  Callbacks                                              │    │
+│  │  - before_agent: Initialize state                       │    │
+│  │  - before_model: Inject context                         │    │
+│  │  - after_model: Process response                        │    │
+│  └─────────────────────────────────────────────────────────┘    │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                      AI MODEL LAYER                              │
-│                  (Google Gemini 2.5 Flash)                       │
-│                                                                   │
-│  - Natural language understanding                                │
-│  - Tool selection & parameter extraction                         │
-│  - Response generation                                           │
-│  - Context management                                            │
+│                      AI MODEL LAYER                             │
+│                  (Google Gemini 2.5 Flash)                      │
+│                                                                 │
+│  - Natural language understanding                               │
+│  - Tool selection & parameter extraction                        │
+│  - Response generation                                          │
+│  - Context management                                           │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -123,7 +123,7 @@ This document explains the architecture of the ADK + CopilotKit integration and 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │ STEP 1: User Input                                               │
-│ User types in CopilotSidebar: "Add a proverb about AI"          │
+│ User types in CopilotSidebar: "Add a proverb about AI"           │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
                              ▼
@@ -132,20 +132,20 @@ This document explains the architecture of the ADK + CopilotKit integration and 
 │ - CopilotKit captures message                                    │
 │ - Packages with current state                                    │
 │ - Sends POST to /api/copilotkit                                  │
-│                                                                   │
+│                                                                  │
 │ Payload: {                                                       │
-│   message: "Add a proverb about AI",                            │
-│   state: { proverbs: [...] },                                   │
-│   actions: [clickElement, fillInput, ...]                       │
+│   message: "Add a proverb about AI",                             │
+│   state: { proverbs: [...] },                                    │
+│   actions: [clickElement, fillInput, ...]                        │
 │ }                                                                │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
                              ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │ STEP 3: API Gateway                                              │
-│ - CopilotRuntime receives request                               │
-│ - Routes to "my_agent" via HttpAgent                            │
-│ - Forwards to http://localhost:8000/                            │
+│ - CopilotRuntime receives request                                │
+│ - Routes to "my_agent" via HttpAgent                             │
+│ - Forwards to http://localhost:8000/                             │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
                              ▼
@@ -169,38 +169,38 @@ This document explains the architecture of the ADK + CopilotKit integration and 
 │ STEP 6: Before Model Callback                                    │
 │ - before_model_modifier() executes                               │
 │ - Injects current proverbs into system prompt                    │
-│                                                                   │
+│                                                                  │
 │ Enhanced Prompt:                                                 │
-│ "You are a helpful assistant for maintaining proverbs.          │
-│  Current proverbs: ['CopilotKit may be new...']                 │
-│  User: Add a proverb about AI"                                  │
+│ "You are a helpful assistant for maintaining proverbs.           │
+│  Current proverbs: ['CopilotKit may be new...']                  │
+│  User: Add a proverb about AI"                                   │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
                              ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │ STEP 7: Gemini Processing                                        │
-│ - ADK sends enhanced prompt to Gemini 2.5 Flash                 │
+│ - ADK sends enhanced prompt to Gemini 2.5 Flash                  │
 │ - Gemini analyzes request                                        │
-│ - Decides to call set_proverbs tool                             │
-│                                                                   │
+│ - Decides to call set_proverbs tool                              │
+│                                                                  │
 │ Tool Call:                                                       │
-│ set_proverbs(new_proverbs=[                                     │
-│   "CopilotKit may be new...",                                   │
-│   "AI is the future of human creativity"                        │
+│ set_proverbs(new_proverbs=[                                      │
+│   "CopilotKit may be new...",                                    │
+│   "AI is the future of human creativity"                         │
 │ ])                                                               │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
                              ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │ STEP 8: Tool Execution                                           │
-│ - set_proverbs() function executes                              │
-│ - Updates tool_context.state["proverbs"]                        │
+│ - set_proverbs() function executes                               │
+│ - Updates tool_context.state["proverbs"]                         │
 │ - Returns success message                                        │
-│                                                                   │
+│                                                                  │
 │ State Update:                                                    │
 │ proverbs: [                                                      │
-│   "CopilotKit may be new...",                                   │
-│   "AI is the future of human creativity"                        │
+│   "CopilotKit may be new...",                                    │
+│   "AI is the future of human creativity"                         │
 │ ]                                                                │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
@@ -219,10 +219,10 @@ This document explains the architecture of the ADK + CopilotKit integration and 
 │ - Sends back through FastAPI                                     │
 │ - HttpAgent receives response                                    │
 │ - CopilotRuntime processes                                       │
-│                                                                   │
+│                                                                  │
 │ Response: {                                                      │
-│   message: "I've added a proverb about AI",                     │
-│   state: { proverbs: [...] },                                   │
+│   message: "I've added a proverb about AI",                      │
+│   state: { proverbs: [...] },                                    │
 │   success: true                                                  │
 │ }                                                                │
 └────────────────────────────┬─────────────────────────────────────┘
@@ -230,10 +230,10 @@ This document explains the architecture of the ADK + CopilotKit integration and 
                              ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │ STEP 11: Frontend Update                                         │
-│ - useCoAgent hook detects state change                          │
+│ - useCoAgent hook detects state change                           │
 │ - React triggers re-render                                       │
 │ - New proverb appears in UI                                      │
-│ - CopilotSidebar shows agent message                            │
+│ - CopilotSidebar shows agent message                             │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
@@ -314,21 +314,21 @@ add_adk_fastapi_endpoint(app, adk_proverbs_agent, path="/")
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Frontend State                            │
+│                    Frontend State                           │
 │  const { state, setState } = useCoAgent({                   │
 │    name: "my_agent",                                        │
 │    initialState: { proverbs: [] }                           │
-│  });                                                         │
+│  });                                                        │
 └────────────────────┬────────────────────────────────────────┘
                      │
                      │ Synchronized via CopilotKit
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    Backend State                             │
+│                    Backend State                            │
 │  tool_context.state = {                                     │
 │    "proverbs": [...]                                        │
-│  }                                                           │
+│  }                                                          │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -362,7 +362,7 @@ tool_context.state["proverbs"] = new_proverbs
                      │
                      ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Agent decides to call clickElement action                     │
+│ Agent decides to call clickElement action                    │
 │ Parameters: { selector: "#submit-btn" }                      │
 └────────────────────┬─────────────────────────────────────────┘
                      │
@@ -377,13 +377,13 @@ tool_context.state["proverbs"] = new_proverbs
 │ handler({ selector }) {                                      │
 │   document.querySelector(selector)?.click();                 │
 │   return { success: true };                                  │
-│ }                                                             │
+│ }                                                            │
 └────────────────────┬─────────────────────────────────────────┘
                      │
                      ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ DOM updated: Button clicked                                   │
-│ Result sent back to agent                                     │
+│ DOM updated: Button clicked                                  │
+│ Result sent back to agent                                    │
 │ Agent responds: "I clicked the submit button"                │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -394,7 +394,7 @@ tool_context.state["proverbs"] = new_proverbs
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│ Page loads / DOM changes                                      │
+│ Page loads / DOM changes                                     │
 └────────────────────┬─────────────────────────────────────────┘
                      │
                      ▼
@@ -409,16 +409,16 @@ tool_context.state["proverbs"] = new_proverbs
                      ▼
 ┌──────────────────────────────────────────────────────────────┐
 │ useCopilotReadable makes it available to agent:              │
-│ {                                                             │
+│ {                                                            │
 │   description: "Current page content",                       │
 │   value: JSON.stringify(pageContent)                         │
-│ }                                                             │
+│ }                                                            │
 └────────────────────┬─────────────────────────────────────────┘
                      │
                      ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Agent receives context with every request                     │
-│ Can analyze and understand page structure                     │
+│ Agent receives context with every request                    │
+│ Can analyze and understand page structure                    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -428,33 +428,33 @@ tool_context.state["proverbs"] = new_proverbs
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│ Layer 1: Frontend Validation                                  │
+│ Layer 1: Frontend Validation                                 │
 │ - Whitelist allowed selectors                                │
 │ - Block dangerous element types                              │
-│ - Rate limiting                                               │
+│ - Rate limiting                                              │
 └────────────────────┬─────────────────────────────────────────┘
                      │
                      ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Layer 2: Action Handlers                                      │
+│ Layer 2: Action Handlers                                     │
 │ - Try-catch error handling                                   │
-│ - Type checking                                               │
-│ - Logging all actions                                         │
+│ - Type checking                                              │
+│ - Logging all actions                                        │
 └────────────────────┬─────────────────────────────────────────┘
                      │
                      ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Layer 3: User Confirmation                                    │
+│ Layer 3: User Confirmation                                   │
 │ - Prompt for sensitive actions                               │
 │ - Require explicit approval                                  │
 └────────────────────┬─────────────────────────────────────────┘
                      │
                      ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Layer 4: Backend Validation                                   │
+│ Layer 4: Backend Validation                                  │
 │ - Agent instruction constraints                              │
 │ - Tool parameter validation                                  │
-│ - State access controls                                       │
+│ - State access controls                                      │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -464,24 +464,24 @@ tool_context.state["proverbs"] = new_proverbs
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│ User Session                                                  │
+│ User Session                                                 │
 │ ┌──────────────────────────────────────────────────────────┐ │
 │ │ Session ID: generated by CopilotKit                      │ │
 │ │ User ID: "demo_user" (configurable)                      │ │
-│ │ Timeout: 3600 seconds                                     │ │
+│ │ Timeout: 3600 seconds                                    │ │
 │ │ Storage: In-memory (can use Redis/DB)                    │ │
 │ └──────────────────────────────────────────────────────────┘ │
-│                                                               │
+│                                                              │
 │ ┌──────────────────────────────────────────────────────────┐ │
-│ │ Conversation History                                      │ │
-│ │ - All messages                                            │ │
-│ │ - Tool calls                                              │ │
-│ │ - State changes                                           │ │
+│ │ Conversation History                                     │ │
+│ │ - All messages                                           │ │
+│ │ - Tool calls                                             │ │
+│ │ - State changes                                          │ │
 │ └──────────────────────────────────────────────────────────┘ │
-│                                                               │
+│                                                              │
 │ ┌──────────────────────────────────────────────────────────┐ │
-│ │ Current State                                             │ │
-│ │ { proverbs: [...] }                                       │ │
+│ │ Current State                                            │ │
+│ │ { proverbs: [...] }                                      │ │
 │ └──────────────────────────────────────────────────────────┘ │
 └──────────────────────────────────────────────────────────────┘
 ```
